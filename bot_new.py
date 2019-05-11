@@ -12,7 +12,7 @@ token = '898402690:AAGghYepUWBlRdPBplWVbXTgYZ7PyXxLz2Y'
 sticker_id = 'CAADAgADVBMAAp7OCwABdgcEfkxwFGcC'
 
 bot = telebot.TeleBot(token)
-users = {}
+users = set()
 
 
 @bot.message_handler(commands = ['start', 'help'])
@@ -26,8 +26,14 @@ def echo_digits(message: Message):
     hi = ['привет', 'Привет', 'hi', 'Hi', 'hello', 'Hello']
     if message.text in hi:
         bot.send_message(message.chat.id, 'И тебе ' + str(message.text + ' ') + str(message.from_user.first_name))
-    else:
-        bot.send_message(message.chat.id, 'Пока не понимаю, о чем ты')
+        return
+    reply = str(random.random())
+    if message.from_user in users:
+        reply += f"  {message.from_user}, hello again"
+    bot.reply_to(message, reply)
+    users.add(message.from_user)
+    # else:
+    #     bot.send_message(message.chat.id, 'Пока не понимаю, о чем ты')
 
 
 @bot.message_handler(content_types = ['sticker'])
