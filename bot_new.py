@@ -4,14 +4,13 @@ import random
 import requests
 
 import telebot
-import pickle
+import tg_token
 from telebot import types
 from telebot.types import Message
 
-token = '898402690:AAGghYepUWBlRdPBplWVbXTgYZ7PyXxLz2Y'
 sticker_id = 'CAADAgADVBMAAp7OCwABdgcEfkxwFGcC'
 
-bot = telebot.TeleBot(token)
+bot = telebot.TeleBot(tg_token.TOKEN)
 users = set()
 
 
@@ -23,15 +22,16 @@ def command_handler(message: Message):
 @bot.message_handler(content_types = ['text'])
 @bot.edited_message_handler(content_types = ['text'])
 def echo_digits(message: Message):
+    print(message.from_user.id)
     hi = ['привет', 'Привет', 'hi', 'Hi', 'hello', 'Hello']
     if message.text in hi:
-        bot.send_message(message.chat.id, 'И тебе ' + str(message.text + ' ') + str(message.from_user.first_name))
+        bot.send_message(message.chat.id, str(message.text) + str(message.from_user.first_name))
         return
-    reply = str(random.random())
-    if message.from_user in users:
-        reply += f"  {message.from_user}, hello again"
+    reply = str(message.text)
+    if message.from_user.id in users:
+        reply += f" {message.from_user.first_name}, hello again"
     bot.reply_to(message, reply)
-    users.add(message.from_user)
+    users.add(message.from_user.id)
     # else:
     #     bot.send_message(message.chat.id, 'Пока не понимаю, о чем ты')
 
