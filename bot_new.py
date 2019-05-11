@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 
-import random
-import requests
-
 import telebot
 import tg_token
 from telebot import types
