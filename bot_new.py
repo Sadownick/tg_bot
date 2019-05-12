@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
 import telebot
-import tg_token
+import config
 from telebot import types
 from telebot.types import Message
 
 sticker_id = 'CAADAgADVBMAAp7OCwABdgcEfkxwFGcC'
 
-bot = telebot.TeleBot(tg_token.TOKEN)
+bot = telebot.TeleBot(config.TOKEN)
 users = set()
 
 
